@@ -1,0 +1,43 @@
+<?php
+session_start();
+include 'dbconnect.php';
+
+if(isset($_POST['Update'])){
+    // Get form data
+   $StationID=$_POST['StationID'];
+   $CompanyName=$_POST["CompanyName"];
+   $TripID=$_POST["TripID"];
+   $Placesoftransportation=$_POST["Placesoftransportation"];  
+   $PassengerID=$_POST["PassengerID"];
+   $Time=$_POST["Time"];
+   $Date=$_POST["Date"];
+   $Day=$_POST["Day"];
+   $PlaceStation=$_POST["PlaceStation"];
+
+    // Prepare SQL statement with placeholders
+    $sql = "UPDATE station SET CompanyName='$CompanyName',
+    TripID='$TripID',
+    Placesoftransportation='$Placesoftransportation', 
+    PassengerID='$PassengerID',
+    Time='$Time',
+    Date='$Date',
+    Day='$Day',
+    PlaceStation='$PlaceStation' WHERE StationID=$StationID";
+
+    // Execute the statement
+    $resul=mysqli_query($conn , $sql);
+    
+    if($resul){
+        $_SESSION["state"] = "Update successful.";
+        // Redirect to adminUpdatePassenger.php
+        header("Location: adminStation.php");
+        exit(); // Make sure to exit after redirecting
+    } else {
+        $_SESSION["message"] = "Update failed. Error: ".$conn->error;
+       
+
+        header("Location: adminUpdateStation.php");
+        exit(); // Exit after redirecting
+    }
+}   
+?>

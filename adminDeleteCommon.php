@@ -1,0 +1,22 @@
+<?php
+session_start();
+
+include 'dbconnect.php'; // Make sure to include your database connection file
+
+if(isset($_POST['delete'])){
+    $trip_id = $_POST['trip_id'];
+    $sql = "DELETE FROM common_trips  WHERE trip_id='$trip_id'";
+    
+    // Execute the query
+    $result = $conn->query($sql);
+
+    // Check if the deletion was successful
+    if($result){
+        
+        $_SESSION["state"] = "Delete Trip with ID $trip_id";
+        header("Location: CommonReports.php");
+    }
+    
+  
+}
+?>
